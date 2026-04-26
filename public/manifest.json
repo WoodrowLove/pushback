@@ -1,0 +1,20 @@
+{
+  "name": "Pushback — Fight Your Medical Bill",
+  "short_name": "Pushback",
+  "description": "Decode a medical bill or insurance denial in plain English. Get an appeal letter drafted for you. Free for the first one.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fbfbfa",
+  "theme_color": "#d65a31",
+  "categories": ["health", "finance", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ]
+}

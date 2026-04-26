@@ -73,15 +73,16 @@ export default function HomePage() {
   }
 
   return (
-    <main className="max-w-3xl mx-auto px-5 py-10">
-      <header className="mb-10">
+    <main className="max-w-3xl mx-auto px-5 py-8 md:py-10">
+      <header className="mb-8 md:mb-10">
         <h1 className="font-serif text-3xl md:text-4xl font-semibold">
           Pushback
         </h1>
         <p className="mt-2 text-base md:text-lg text-ink/80 leading-relaxed">
-          Upload a medical bill or insurance denial. We&rsquo;ll decode it in
-          plain English, flag what looks wrong, and draft an appeal letter you
-          can mail. The first one&rsquo;s free.
+          Got a medical bill or insurance denial that doesn&rsquo;t look right?
+          Take a photo or upload it. We&rsquo;ll explain it in plain English,
+          flag what&rsquo;s wrong, and write the appeal letter for you. The
+          first one&rsquo;s free.
         </p>
         <div className="mt-4">
           <Disclaimer tone="prominent" />

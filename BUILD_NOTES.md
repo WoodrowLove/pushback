@@ -128,18 +128,40 @@ The first bill is free; subsequent bills should be paid. v0.2 design:
 
 ## Punch list (what's next)
 
-In priority order:
+In priority order. Strategic context decided 2026-04-25 with the founder:
+go PWA-first (mobile-installable from any browser), drop monthly subscription
+in favor of pay-per-bill + low annual unlimited, defer benefits-package
+ingestion until user accounts exist.
 
-1. **Real-bill end-to-end test.** Get one real EOB and one real bill (anonymized), run through, fix what breaks.
-2. **Deploy to Vercel** + custom domain (when picked).
-3. **Email capture** + Buttondown/Resend integration. First bill free, then email-gated. Critical for distribution metrics.
-4. **State law corpora** for top 6 states.
-5. **Stripe Checkout** for paid tier.
-6. **Quality feedback widget** at end of each flow.
-7. **PDF export** of the letter (so users can print directly without copy/paste).
-8. **Mailing-address lookup** by insurer name (most insurer appeal addresses are publicly known).
-9. **OCR fallback** for image-only PDFs.
-10. **Spanish translation** of the UI and the appeal letter output. Underserved patient population, easy LLM win.
+1. **Real-bill end-to-end test.** ✅ Validated 2026-04-25 against two synthetic-but-realistic EOBs (one clean, one anomalous). The anomalous one had 6 distinct errors (date-before-service, allowed > billed, negative charge, MRI denial without explanation, "Unknown Service" line, totals not reconciling) — all six caught at high confidence.
+2. **PWA polish.** ✅ 2026-04-25: added \`manifest.json\`, theme color, apple-web-app meta, \`capture="environment"\` on the mobile camera input. Installable via "Add to Home Screen" on any phone browser.
+3. **Deploy to Vercel** + custom domain (when picked). Set \`ANTHROPIC_API_KEY\` in Vercel env vars.
+4. **Pricing page + Stripe Checkout** — pay-per-bill ($19) and annual ($49). NO monthly. Free first bill stays free with no signup.
+5. **PDF export of the letter** — print directly without copy/paste. Big for older users. Can use \`@react-pdf/renderer\` or just CSS print styles.
+6. **Mailing-address lookup** by insurer name. Known list of top 30 insurer appeal addresses ships as JSON; LLM cites by lookup, not memory. Critical because NSA appeals get sent to the wrong address all the time.
+7. **State law corpora** for top 6 states (TX, CA, NY, FL, IL, PA).
+8. **"Did this work?" follow-up** — opt-in email at 30 days asking whether the appeal succeeded. Real outcome data is the best marketing + quality signal we'll ever have.
+9. **Spanish translation** of the UI and appeal letter output.
+10. **User accounts + benefits-package ingestion (v0.2).** Plan: NextAuth.js + Vercel Postgres. User uploads their plan's Summary of Benefits and Coverage (SBC); we parse copays, network type, formulary, deductible. That context goes into every future analysis. Privacy review required before this ships.
+11. **Native app wrap.** AFTER we have paying users. Capacitor or React Native + Expo, submit to both stores. PWA stays the canonical product.
+12. **Email capture** for users who skip the paid tier. Tied to "did the appeal work?" follow-up.
+13. **OCR fallback** for image-only PDFs Claude vision struggles with.
+14. **Quality feedback widget** at end of each flow.
+
+## Pricing model (decided)
+
+- **Free** — 1 bill / year. No signup. Kept simple to remove all friction for first contact.
+- **Pay per bill — $19** — Stripe Checkout, no account required. Friction-free for "I just got a weird bill, fix this one."
+- **Annual unlimited — $49/year** — for chronic patients, pregnancies, families managing aging adults. Low enough that "is it worth it?" doesn't enter the calculation.
+- **No monthly subscription.** Wrong shape for this use case — too much friction for occasional users, too low value for regulars.
+
+## Mobile strategy (decided)
+
+Ship a PWA before any native app. Reasons captured in priority list above.
+The current codebase already produces an installable PWA with camera-first
+upload on mobile. Native wrap (Capacitor) is queued for after first paying
+users. Apple medical-app review is unpredictable; we don't want our launch
+gated on it.
 
 ## Known limitations
 

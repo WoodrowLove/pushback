@@ -64,22 +64,44 @@ export function Uploader({ onDecode, isLoading }: Props) {
       </div>
 
       {mode === "file" ? (
-        <label className="block border-2 border-dashed border-muted/40 hover:border-accent transition-colors rounded-lg p-8 text-center cursor-pointer">
-          <input
-            type="file"
-            accept="image/*,application/pdf"
-            className="hidden"
-            disabled={isLoading}
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) handleFile(f);
-            }}
-          />
-          <div className="text-base">
-            {isLoading ? "Reading…" : "Drop a bill, EOB, or denial letter here"}
-          </div>
-          <div className="text-xs text-muted mt-1">PDF or image. We process and discard.</div>
-        </label>
+        <div className="space-y-3">
+          {/* Camera-first button — opens the phone's back camera directly on
+              mobile. On desktop this still works as a normal file picker. */}
+          <label className="block sm:hidden border-2 border-accent bg-accent/5 hover:bg-accent/10 transition-colors rounded-lg p-6 text-center cursor-pointer">
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="hidden"
+              disabled={isLoading}
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) handleFile(f);
+              }}
+            />
+            <div className="text-base font-medium">
+              {isLoading ? "Reading…" : "📷 Take a photo of the bill"}
+            </div>
+            <div className="text-xs text-muted mt-1">Opens your camera</div>
+          </label>
+
+          <label className="block border-2 border-dashed border-muted/40 hover:border-accent transition-colors rounded-lg p-8 text-center cursor-pointer">
+            <input
+              type="file"
+              accept="image/*,application/pdf"
+              className="hidden"
+              disabled={isLoading}
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) handleFile(f);
+              }}
+            />
+            <div className="text-base">
+              {isLoading ? "Reading…" : "Or upload a PDF or image"}
+            </div>
+            <div className="text-xs text-muted mt-1">PDF or image. We process and discard.</div>
+          </label>
+        </div>
       ) : (
         <div className="space-y-2">
           <textarea
