@@ -1,0 +1,72 @@
+{
+  "_doc": "Federal patient-protection rules cited in appeal letters. We use these as grounded references — the LLM cites them by ID instead of generating its own legal claims. Update this file whenever a rule changes; cite the specific section in the appeal.",
+  "_lastUpdated": "2026-04-25",
+  "rules": {
+    "no_surprises_act": {
+      "id": "no_surprises_act",
+      "label": "No Surprises Act (NSA)",
+      "effective": "2022-01-01",
+      "summary": "Federal law that protects patients from most surprise out-of-network bills for emergency services and for non-emergency services at in-network facilities. Patient cost-sharing must be calculated as if the service were in-network.",
+      "applies_when": [
+        "Emergency services billed at out-of-network rates",
+        "Non-emergency services at an in-network facility delivered by an out-of-network provider (e.g. anesthesiologist, radiologist, pathologist)",
+        "Non-emergency air ambulance"
+      ],
+      "doesnt_apply_when": [
+        "The patient gave informed written consent (Notice and Consent form) at least 72 hours before the service for non-emergency, post-stabilization care",
+        "Ground ambulance services (not yet covered by NSA)"
+      ],
+      "key_citation": "Public Health Service Act §§ 2799A-1, 2799A-2; 45 CFR §§ 149.110, 149.120",
+      "url": "https://www.cms.gov/nosurprises"
+    },
+    "erisa_appeal_rights": {
+      "id": "erisa_appeal_rights",
+      "label": "ERISA Internal Appeal + External Review",
+      "summary": "If you have an employer-sponsored health plan that's ERISA-governed, you have a federal right to (a) an internal appeal within the plan, and (b) an external review by an independent reviewer if the internal appeal fails. The plan must respond to internal appeals within 30 days for pre-service claims, 60 days for post-service.",
+      "applies_when": [
+        "You have employer-sponsored coverage",
+        "The denial is based on medical necessity, experimental/investigational, or coverage rescission"
+      ],
+      "key_citation": "29 CFR § 2560.503-1",
+      "url": "https://www.dol.gov/agencies/ebsa/laws-and-regulations/laws/erisa"
+    },
+    "aca_internal_appeal": {
+      "id": "aca_internal_appeal",
+      "label": "ACA Internal Appeal Rights",
+      "summary": "Under the Affordable Care Act, all non-grandfathered plans must offer (1) an internal appeal process, and (2) an external review by an independent third party. You have at least 180 days to file an internal appeal from the date of the denial notice.",
+      "applies_when": [
+        "Non-grandfathered marketplace and most employer plans",
+        "The plan denied or reduced a claim, refused to authorize a service, or rescinded coverage"
+      ],
+      "key_citation": "45 CFR § 147.136",
+      "url": "https://www.healthcare.gov/appeal-insurance-company-decision/appeals/"
+    },
+    "aca_preventive_care": {
+      "id": "aca_preventive_care",
+      "label": "ACA Preventive Care — No Cost-Sharing",
+      "summary": "Most non-grandfathered plans must cover certain preventive services (annual physical, vaccines, screenings on the USPSTF A/B list, women's preventive services) with $0 cost to the patient — no deductible, no copay, no coinsurance, when delivered by an in-network provider.",
+      "applies_when": [
+        "Service is on the official preventive list",
+        "Provider is in-network",
+        "Service was delivered as preventive (not in response to a symptom)"
+      ],
+      "key_citation": "45 CFR § 147.130",
+      "url": "https://www.healthcare.gov/coverage/preventive-care-benefits/"
+    },
+    "hipaa_request_records": {
+      "id": "hipaa_request_records",
+      "label": "HIPAA Right to Request Itemized Records",
+      "summary": "Under HIPAA, patients have the right to request and receive a copy of their itemized medical billing records. Hospitals must respond within 30 days. This is essential for verifying line items before appealing.",
+      "key_citation": "45 CFR § 164.524",
+      "url": "https://www.hhs.gov/hipaa/for-individuals/medical-records/index.html"
+    },
+    "good_faith_estimate": {
+      "id": "good_faith_estimate",
+      "label": "No Surprises Act — Good Faith Estimate",
+      "summary": "If you're uninsured or self-pay, providers must give you a Good Faith Estimate of expected charges before scheduled services. If the final bill exceeds the estimate by more than $400, you can dispute it through Patient-Provider Dispute Resolution.",
+      "applies_when": ["Patient is uninsured or self-pay", "Service was scheduled at least 3 days in advance"],
+      "key_citation": "45 CFR § 149.610",
+      "url": "https://www.cms.gov/nosurprises/consumers"
+    }
+  }
+}
