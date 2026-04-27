@@ -84,6 +84,11 @@ export default function HomePage() {
           flag what&rsquo;s wrong, and write the appeal letter for you. The
           first one&rsquo;s free.
         </p>
+        <p className="mt-3 text-sm">
+          <a href="/case-study" className="text-accent underline">
+            See a real walkthrough on a $2,820 ER bill →
+          </a>
+        </p>
         <div className="mt-4">
           <Disclaimer tone="prominent" />
         </div>
