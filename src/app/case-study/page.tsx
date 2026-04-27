@@ -297,6 +297,11 @@ export default function CaseStudyPage() {
         <div className="mt-6">
           <Disclaimer tone="subtle" />
         </div>
+        <p className="mt-4 text-sm">
+          <a href="/values" className="text-accent underline">
+            See what we will and won&rsquo;t do →
+          </a>
+        </p>
       </section>
     </main>
   );

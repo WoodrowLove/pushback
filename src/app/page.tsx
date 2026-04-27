@@ -133,6 +133,18 @@ export default function HomePage() {
           Built by Sunny Jaymes. Free for the first bill; paid tier coming soon
           for unlimited appeals.
         </p>
+        <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+          <a href="/case-study" className="hover:text-accent">Case study</a>
+          <a href="/values" className="hover:text-accent">What we will + won&rsquo;t do</a>
+          <a
+            href="https://github.com/WoodrowLove/pushback"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-accent"
+          >
+            Source (MIT)
+          </a>
+        </p>
       </footer>
     </main>
   );
