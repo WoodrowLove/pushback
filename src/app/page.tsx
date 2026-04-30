@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Uploader } from "@/components/Uploader";
 import { Results } from "@/components/Results";
 import { LetterPreview } from "@/components/LetterPreview";
 import { Disclaimer } from "@/components/Disclaimer";
+import { Paywall } from "@/components/Paywall";
+import { markFreeUsed, shouldShowPaywall } from "@/lib/unlock";
 import type {
   DecodeRequest,
   DecodeResponse,
@@ -21,6 +23,14 @@ export default function HomePage() {
   const [drafting, setDrafting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Paywall state. Hydration-safe: starts null on SSR, set after mount.
+  // While null we render neither uploader nor paywall (a tiny flash is
+  // better than mismatched markup).
+  const [paywalled, setPaywalled] = useState<boolean | null>(null);
+  useEffect(() => {
+    setPaywalled(shouldShowPaywall());
+  }, []);
+
   async function handleDecode(req: DecodeRequest) {
     setError(null);
     setLetter(null);
@@ -35,6 +45,9 @@ export default function HomePage() {
       const j = (await r.json()) as DecodeResponse;
       if (!j.ok) throw new Error(j.error || "Unknown error");
       setDecoded(j.data);
+      // Mark free used after a successful decode. Future decode attempts
+      // hit the paywall unless the user has unlocked.
+      markFreeUsed();
       // Pre-select high-confidence anomalies
       const auto = new Set<number>();
       j.data.anomalies.forEach((a, i) => {
@@ -95,7 +108,11 @@ export default function HomePage() {
       </header>
 
       <section className="mb-10">
-        <Uploader onDecode={handleDecode} isLoading={decoding} />
+        {paywalled === null ? null : paywalled && !decoded && !letter ? (
+          <Paywall />
+        ) : (
+          <Uploader onDecode={handleDecode} isLoading={decoding} />
+        )}
       </section>
 
       {error && (
@@ -130,8 +147,9 @@ export default function HomePage() {
       <footer className="mt-16 pt-8 border-t border-muted/20 text-xs text-muted leading-relaxed">
         <Disclaimer />
         <p className="mt-3">
-          Built by Sunny Jaymes. Free for the first bill; paid tier coming soon
-          for unlimited appeals.
+          Built by Sunny Jaymes. Free for the first bill, then $19 per bill or
+          $49 for a year of unlimited decodes. Refund on appeal failure if you
+          mailed the letter.
         </p>
         <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
           <a href="/case-study" className="hover:text-accent">Case study</a>
