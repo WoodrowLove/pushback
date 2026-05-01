@@ -108,7 +108,17 @@ export default function HomePage() {
       </header>
 
       <section className="mb-10">
-        {paywalled === null ? null : paywalled && !decoded && !letter ? (
+        {/*
+          Render Uploader by default so SSR (and the brief pre-hydration
+          window) shows a working interface to first-time visitors —
+          who are 99% of inbound traffic. Paywall only swaps in once
+          hydration confirms the user has already used the free decode
+          (paywalled === true). Trade-off: a returning paywalled user
+          sees a 100ms flash of Uploader before Paywall takes over,
+          which is far better than every first-time visitor seeing a
+          blank section while JS hydrates.
+        */}
+        {paywalled === true && !decoded && !letter ? (
           <Paywall />
         ) : (
           <Uploader onDecode={handleDecode} isLoading={decoding} />
